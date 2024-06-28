@@ -1,7 +1,11 @@
-﻿public class Arena
+﻿namespace TicTacToe
 {
-    public static void Main(string[] args)
+    public class Arena
     {
-        System.Console.WriteLine("Hello world!");
+        public static void Main(string[] args)
+        {
+            OG a = new OG();
+            System.Console.WriteLine(a.Name());
+        }
     }
 }
