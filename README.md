@@ -1,7 +1,7 @@
 Given a position, can you return a move? How about a good one?\
-Of course you can brute force it try everything, but we don't have all day, you will be given 100ms\
+Of course you can brute force it try everything, but we don't have all day, you will be given 100ms
 
-To participate you will need to follow the format of the abstract class Engine and respect the convention of the move input.\
+To participate you will need to follow the format of the abstract class Engine and respect the convention of the move input.
 
 TODO operator counter
 This will allow you to 'fit' into category. The category are base on the powers of 2.
