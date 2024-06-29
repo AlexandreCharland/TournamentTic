@@ -12,7 +12,9 @@ If times allows it I will add my original engine from Julia (OG) and maybe some 
 
 TODO explain the rule of the game
 
-A move is a int[3].\
+TODO explain how a position is store.
+
+A move is a sbyte[3].\
 The first slot indicates the pieces size {0,1,2} where 0 is the smallest piece.\
 The second slot indicates the location the piece was previously on. {0,...,8} for a piece on the board and -1 if its comes from the deck.\
 The third slot indicates the location of where the piece will be place. {0,..,8}

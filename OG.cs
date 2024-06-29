@@ -10,10 +10,17 @@ namespace TicTacToe
         {
             return "OG";
         }
-        public override int[] GiveMove(int[] position)
+        public override sbyte[] GiveMove(sbyte[] position)
         {
-            int[] move = new int[3];
+            sbyte[] move = new sbyte[3];
             return move;
+        }
+        public void test()
+        {
+            sbyte[] a = new sbyte[12];
+            a[9] = 42;
+            a[10] = 42;
+            ShowPosition(a);
         }
     }
 }
