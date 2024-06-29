@@ -1,3 +1,4 @@
+//This is my original algorithm translated from julia to c#
 namespace TicTacToe
 {
     public class OG : Engine
@@ -10,7 +11,7 @@ namespace TicTacToe
         {
             return "OG";
         }
-        public override sbyte[] GiveMove(sbyte[] position)
+        public override sbyte[] GiveMove(sbyte[] game)
         {
             sbyte[] move = new sbyte[3];
             return move;
@@ -18,9 +19,12 @@ namespace TicTacToe
         public void test()
         {
             sbyte[] a = new sbyte[12];
-            a[9] = 42;
-            a[10] = 42;
-            ShowPosition(a);
+            a[9]=42;a[10]=42;
+            sbyte[] move = new sbyte[3];
+            move[1]=-1;
+            sbyte[] b = MakeMove(a, move);
+            ShowPosition(b);
+            //System.Console.WriteLine(SomethingHasChange(a,0));
         }
     }
 }

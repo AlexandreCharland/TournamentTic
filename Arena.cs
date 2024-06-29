@@ -5,7 +5,8 @@
         public static void Main(string[] args)
         {
             OG a = new OG();
-            System.Console.WriteLine(a.TransformInt("123"));
+
+            a.test();
         }
     }
 }
