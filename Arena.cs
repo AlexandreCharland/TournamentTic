@@ -4,7 +4,7 @@
     {
         public static void Main(string[] args)
         {
-            play();
+            //play();
         }
         public static void imprime(List<sbyte[]> a)
         {
@@ -62,8 +62,7 @@
                 }
                 compMove = bot.GiveMove(game);
                 //clrscr();
-                System.Console.WriteLine("The computer played ");
-                //TODO Write computer move
+                System.Console.WriteLine($"The computer played {compMove[0]}{compMove[1]}{compMove[2]}");
                 game = bot.MakeMove(game, compMove);
                 if(bot.SomeoneWon(game))
                 {

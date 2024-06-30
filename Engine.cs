@@ -4,6 +4,7 @@ namespace TicTacToe
     {
         //Function  you have to implement
         public abstract string Name();
+        public abstract Engine Duplicate();
         public abstract sbyte[] GiveMove(sbyte[] game);
 
         //Function that I give you
@@ -114,7 +115,7 @@ namespace TicTacToe
             }
             else
             {
-                newGame[move[2]] -= (sbyte)(piece<<newGame[11]);
+                newGame[move[1]] -= (sbyte)(piece<<newGame[11]);
             }
             newGame[11] ^= 1;//Bitwise xor
             return newGame;
@@ -168,7 +169,7 @@ namespace TicTacToe
         public sbyte[] WherePlayablePiece(sbyte[] game)
         {
             sbyte[] location = new sbyte[6];
-            Array.Fill(location, (sbyte)9);
+            Array.Fill(location, (sbyte)-1);
             for(sbyte i = 0; i<=8; ++i)
             {
                 if(game[i] != 0)
@@ -222,7 +223,7 @@ namespace TicTacToe
                 }
                 else
                 {
-                    j=0;
+                    j=2;
                 }
                 while(j <= 5)
                 {
@@ -260,31 +261,27 @@ namespace TicTacToe
                 }
                 else
                 {
-                    j=0;
+                    j=2;
                 }
                 while(j <= 5)
                 {
-                    if(location[j] == -1)
-                    {
-                        j+=(sbyte)(1+(j&1));
-                    }
-                    else if(location[j] == -1)
+                    if(location[j] == 9)
                     {
                         sbyte[] move = new sbyte[3];
                         move[0] = (sbyte)(j>>1);
+                        move[1] = 9;
                         move[2] = i;
                         moveListDeck.Add(move);
-                        j = (sbyte)(1+(j&1));
                     }
-                    else
+                    else if(location[j] != -1)
                     {
                         sbyte[] move = new sbyte[3];
                         move[0] = (sbyte)(j>>1);
                         move[1] = location[j];
                         move[2] = i;
                         moveListBoard.Add(move);
-                        j += 1;
                     }
+                    j+=1;
                 }
             }
             return moveListDeck.Concat(moveListBoard).ToList();

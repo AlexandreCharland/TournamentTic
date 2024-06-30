@@ -13,9 +13,14 @@ namespace TicTacToe
         {
             return "Random";
         }
+        public override RandomMove Duplicate()
+        {
+            return new RandomMove();
+        }
         public override sbyte[] GiveMove(sbyte[] game)
         {
-            List<sbyte[]> moveList = GenerateBetterMove(game);
+            sbyte[] location = WherePlayablePiece(game);
+            List<sbyte[]> moveList = GenerateMove(game, location);
             return moveList[generator.Next(0,moveList.Count)];
         }
     }
