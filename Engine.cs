@@ -108,9 +108,9 @@ namespace TicTacToe
             sbyte[] newGame = (sbyte[])(game.Clone());
             sbyte piece = (sbyte)(1<<(move[0]<<1));
             newGame[move[2]] += (sbyte)(piece<<newGame[11]);
-            if (move[1] == -1)
+            if (move[1] == 9)
             {
-                newGame[9^newGame[11]] -= piece;
+                newGame[9+newGame[11]] -= piece;
             }
             else
             {
@@ -121,18 +121,18 @@ namespace TicTacToe
         }
         public sbyte[] FoundOne(sbyte[] location, sbyte piece, sbyte from)
         {
-            int a = (location[piece<<1] == 9) ? 0 : 1;
+            int a = (location[piece<<1] == -1) ? 0 : 1;
             location[(piece<<1)+a] = from;
             return location;
         }
         public sbyte[] WhoIsOnTheBench(sbyte[] game, sbyte[] location)
         {
-            sbyte val = game[9^game[11]];
+            sbyte val = game[9+game[11]];
             for(sbyte i=0; i<=2; ++i)
             {
                 if((val & 3) != 0)
                 {
-                    location = FoundOne(location, i, 0);
+                    location = FoundOne(location, i, 9);
                 }
                 val >>= 2;
             }
@@ -141,7 +141,7 @@ namespace TicTacToe
         public sbyte[] WhereEveryPiece(sbyte[] game)
         {
             sbyte[] location = new sbyte[6];
-            Array.Fill(location, (sbyte)9);
+            Array.Fill(location, (sbyte)-1);
             for(sbyte i = 0; i<=8; ++i)
             {
                 if(game[i] != 0)
@@ -226,19 +226,15 @@ namespace TicTacToe
                 }
                 while(j <= 5)
                 {
-                    if(location[j] == 9)
-                    {
-                        j+=(sbyte)(1+(j&1));
-                    }
-                    else
+                    if(location[j] != -1)
                     {
                         sbyte[] move = new sbyte[3];
-                        move[0] = (sbyte)((j-1)>>1);
+                        move[0] = (sbyte)(j>>1);
                         move[1] = location[j];
                         move[2] = i;
                         moveList.Add(move);
-                        j = (sbyte)((location[j] == -1) ? j + (j & 1) + 1 : j+1);
                     }
+                    j+=1;
                 }
             }
             return moveList;
@@ -268,14 +264,14 @@ namespace TicTacToe
                 }
                 while(j <= 5)
                 {
-                    if(location[j] == 9)
+                    if(location[j] == -1)
                     {
                         j+=(sbyte)(1+(j&1));
                     }
                     else if(location[j] == -1)
                     {
                         sbyte[] move = new sbyte[3];
-                        move[0] = (sbyte)((j-1)>>1);
+                        move[0] = (sbyte)(j>>1);
                         move[2] = i;
                         moveListDeck.Add(move);
                         j = (sbyte)(1+(j&1));
@@ -283,7 +279,7 @@ namespace TicTacToe
                     else
                     {
                         sbyte[] move = new sbyte[3];
-                        move[0] = (sbyte)((j-1)>>1);
+                        move[0] = (sbyte)(j>>1);
                         move[1] = location[j];
                         move[2] = i;
                         moveListBoard.Add(move);

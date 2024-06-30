@@ -15,8 +15,8 @@ namespace TicTacToe
         }
         public override sbyte[] GiveMove(sbyte[] game)
         {
-            List<sbyte[]> moveList = GenerateEveryMove(game);
-            return moveList[generator.Next(moveList.Count)];
+            List<sbyte[]> moveList = GenerateBetterMove(game);
+            return moveList[generator.Next(0,moveList.Count)];
         }
     }
 }
