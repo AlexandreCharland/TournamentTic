@@ -1,3 +1,25 @@
+/*
+Visualisation of the board 
+ 0 | 1 | 2
+---+---+--
+ 3 | 4 | 5
+---+---+---
+ 6 | 7 | 8
+game[9] deck of the X player
+game[10] deck of the O player
+game[11] 0 if X turn 1 if O turn
+
+ I | B | D
+" "| 0 |
+ x | 1 | 1
+ o | 2 | 1
+ + | 4 | 4
+ 0 | 8 | 4
+ X | 16| 16
+ O | 32| 16
+
+This is the notation of I(image), B(Board or game[i] i∈{0,...,8}) D(Deck of game[i] i∈{9,10})
+*/
 namespace TicTacToe
 {
     public abstract class Engine

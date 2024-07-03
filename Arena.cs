@@ -4,8 +4,10 @@
     {
         public static void Main(string[] args)
         {
-            //play();
+            OG bot = new OG();
+            play(bot);
         }
+        //Debug function
         public static void imprime(List<sbyte[]> a)
         {
             for(int i=0; i<a.Count; ++i)
@@ -27,9 +29,8 @@
             }
             return containIt;
         }
-        public static void play()
+        public static void play(Engine bot)
         {
-            Engine bot = new RandomMove();
             bool gameInProgress = true;
             sbyte[] game = new sbyte[12];
             game[9] = 42;
@@ -42,18 +43,21 @@
             {
                 bot.ShowPosition(game);
                 listMove = bot.GenerateEveryMove(game);
+                #pragma warning disable 8604
                 userMove = bot.TransformInt(System.Console.ReadLine());
                 while(!MoveInList(listMove, userMove))
                 {
                     System.Console.WriteLine("Invalid move");
                     userMove = bot.TransformInt(System.Console.ReadLine());
                 }
+                #pragma warning restore 8604
                 listBadMove = bot.GenerateBetterMove(game);
                 if(!MoveInList(listBadMove, userMove))
                 {
                     System.Console.WriteLine("Get good");
                     break;
                 }
+                
                 game = bot.MakeMove(game, userMove);
                 if(bot.SomeoneWon(game))
                 {
