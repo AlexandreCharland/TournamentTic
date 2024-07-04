@@ -308,7 +308,7 @@ namespace TicTacToe
             }
             return moveListDeck.Concat(moveListBoard).ToList();
         }
-        public List<sbyte[]> GenerateEveryMove(sbyte[] game)
+        public List<sbyte[]> GenerateEveryMove(sbyte[] game) //Cost of 0
         {
             sbyte[] location = WhereEveryPiece(game);
             return GenerateMove(game, location);

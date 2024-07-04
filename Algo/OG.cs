@@ -3,117 +3,61 @@ namespace TicTacToe
 {
     public class OG : Engine
     {
-        public OG()
-        {
-
-        }
-        public override string Name()
-        {
-            return "OG";
-        }
-        public override OG Duplicate()
-        {
-            return new OG();
-        }
+        public OG(){}
+        public override string Name() => "OG";
+        public override OG Duplicate() => new OG();
+        
         public override sbyte[] GiveMove(sbyte[] game)
         {
-            sbyte[] move;
-            sbyte eval = 0;
-            if(game[11] == 0)
+            sbyte[] bestMove = new sbyte[3];
+            sbyte turn = (game[11]==0) ? (sbyte)1 : (sbyte)-1;
+            sbyte eval = turn;
+            List<sbyte[]> moveList = GenerateBetterMove(game);
+            foreach(sbyte[] move in moveList)
             {
-                (move, eval) = X(game, new sbyte[3], 3);
+                sbyte val = CrunchingNumbers(MakeMove(game, move), move[2], 2);
+                if(val*turn>=1)
+                {
+                    return move;
+                }
+                else if(((val == 0) || (val*turn < eval*turn)) && (eval != 0))
+                {
+                    bestMove = move;
+                    eval = val;
+                }
             }
-            else
-            {
-                (move, eval) = O(game, new sbyte[3], 3);
-            }
-            return move;
+            return bestMove;
         }
-        private (sbyte[], sbyte) X(sbyte[] game, sbyte[] prevMove, sbyte depth)
+        private sbyte CrunchingNumbers(sbyte[] game, sbyte square, sbyte depth)
         {
-            if(SomethingHasChange(game, prevMove[2]))
+            sbyte turn = (game[11]==0) ? (sbyte)1 : (sbyte)-1;
+            if(SomethingHasChange(game, square))
             {
-                return (prevMove, -1);
+                return (sbyte)(-turn);
             }
             else if(depth == 0)
             {
-                return (prevMove, 0);
+                return 0;
             }
-            else
+            List<sbyte[]> moveList = GenerateBetterMove(game);
+            if(moveList.Count == 0)
             {
-                List<sbyte[]> moveList = GenerateBetterMove(game);
-                if(moveList.Count == 0)
+                return (sbyte)(-turn);
+            }
+            sbyte positionValue = turn;
+            foreach(sbyte[] move in moveList)
+            {
+                sbyte val = CrunchingNumbers(MakeMove(game, move), move[2], (sbyte)(depth-1));
+                if(val*turn>=1)
                 {
-                    return (prevMove, -1);
+                    return (sbyte)(val+turn);
                 }
-                else
+                else if(((val == 0) || (val*turn < positionValue*turn)) && (positionValue != 0))
                 {
-                    sbyte positionValue = 1;
-                    sbyte[] bestMove = new sbyte[3];
-                    foreach (sbyte[] move in moveList)
-                    {
-                        (sbyte[] curMove, sbyte val) = O(MakeMove(game, move),move, (sbyte)(depth-1));
-                        if(val>=1)
-                        {
-                            return (move, (sbyte)(val+1));
-                        }
-                        else if((val == 0) && (positionValue != 0))
-                        {
-                            bestMove = move;
-                            positionValue = val;
-                        }
-                        else if((val < positionValue) && (positionValue != 0))
-                        {
-                            bestMove = move;
-                            positionValue = val;
-                        }
-                    }
-                    return (bestMove, positionValue);
+                    positionValue = val;
                 }
             }
-        }
-        private (sbyte[], sbyte) O(sbyte[] game, sbyte[] prevMove, sbyte depth)
-        {
-            if(SomethingHasChange(game, prevMove[2]))
-            {
-                return (prevMove, 1);
-            }
-            else if(depth == 0)
-            {
-                return (prevMove, 0);
-            }
-            else
-            {
-                List<sbyte[]> moveList = GenerateBetterMove(game);
-                if(moveList.Count == 0)
-                {
-                    return (prevMove, 1);
-                }
-                else
-                {
-                    sbyte positionValue = -1;
-                    sbyte[] bestMove = new sbyte[3];
-                    foreach (sbyte[] move in moveList)
-                    {
-                        (sbyte[] curMove, sbyte val) = X(MakeMove(game, move),move, (sbyte)(depth-1));
-                        if(val<=-1)
-                        {
-                            return (move, (sbyte)(val-1));
-                        }
-                        else if((val == 0) && (positionValue != 0))
-                        {
-                            bestMove = move;
-                            positionValue = val;
-                        }
-                        else if((val > positionValue) && (positionValue != 0))
-                        {
-                            bestMove = move;
-                            positionValue = val;
-                        }
-                    }
-                    return (bestMove, positionValue);
-                }
-            }
+            return positionValue;
         }
     }
 }
