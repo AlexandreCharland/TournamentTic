@@ -5,75 +5,66 @@
         public static void Main(string[] args)
         {
             OG bot = new OG();
-            play(bot);
-        }
-        //Debug function
-        public static void imprime(List<sbyte[]> a)
-        {
-            for(int i=0; i<a.Count; ++i)
-            {
-                sbyte[] b = a[i];
-                for(int j=0; j<=2; ++j)
-                {
-                    System.Console.Write(b[j]);
-                }
-                System.Console.WriteLine();
-            }
-        }
-        public static bool MoveInList(List<sbyte[]> listMove, sbyte[] userMove)
-        {
-            bool containIt = false;
-            foreach (sbyte[] move in listMove)
-            {
-                containIt = containIt || Enumerable.SequenceEqual(move, userMove);
-            }
-            return containIt;
+            //play(bot);
         }
         public static void play(Engine bot)
         {
+            Arbiter referee = new Arbiter();
             bool gameInProgress = true;
-            sbyte[] game = new sbyte[12];
-            game[9] = 42;
-            game[10] = 42;
-            List<sbyte[]> listMove;
             sbyte[] userMove;
-            List<sbyte[]> listBadMove;
             sbyte[] compMove;
             while(gameInProgress)
             {
-                bot.ShowPosition(game);
-                listMove = bot.GenerateEveryMove(game);
+                referee.ShowPosition();
+                //Remove annoying warning messages
                 #pragma warning disable 8604
-                userMove = bot.TransformInt(System.Console.ReadLine());
-                while(!MoveInList(listMove, userMove))
+                userMove = referee.TransformInt(System.Console.ReadLine());
+                while(!referee.IsMoveLegal(userMove))
                 {
                     System.Console.WriteLine("Invalid move");
-                    userMove = bot.TransformInt(System.Console.ReadLine());
+                    userMove = referee.TransformInt(System.Console.ReadLine());
                 }
                 #pragma warning restore 8604
-                listBadMove = bot.GenerateBetterMove(game);
-                if(!MoveInList(listBadMove, userMove))
+                if(!referee.IsPinPiece(userMove))
                 {
                     System.Console.WriteLine("Get good");
                     break;
                 }
-                
-                game = bot.MakeMove(game, userMove);
-                if(bot.SomeoneWon(game))
+                referee.UpdateGame(userMove);
+                if(referee.SomeoneWon())
                 {
                     System.Console.WriteLine("Congrats you have won");
                     break;
                 }
-                compMove = bot.GiveMove(game);
+                compMove = bot.GiveMove(referee.getGame());
+                if(!referee.IsPinPiece(compMove))
+                {
+                    System.Console.WriteLine("The computer played an impossible move");
+                    System.Console.WriteLine("Congrats you have won");
+                    break;
+                }
                 //clrscr();
                 System.Console.WriteLine($"The computer played {compMove[0]}{compMove[1]}{compMove[2]}");
-                game = bot.MakeMove(game, compMove);
-                if(bot.SomeoneWon(game))
+                referee.UpdateGame(compMove);
+                if(referee.SomeoneWon())
                 {
                     System.Console.WriteLine("Get good");
                     gameInProgress = false;
                 }
             }
+        }
+        public static void Colosseum(List<Engine> gladiators)
+        {
+            //Todo
+        }
+        public static byte fight(Engine a, Engine b)
+        {
+            //Todo
+            return 1;
+        }
+        public static void CalculEloRating(sbyte[] result)
+        {
+            //Todo
         }
     }
 }

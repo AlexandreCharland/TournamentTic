@@ -59,5 +59,56 @@ namespace TicTacToe
             }
             return positionValue;
         }
+        private List<sbyte[]> GenerateOrderMove(sbyte[] game, sbyte[] location)
+        {
+            List<sbyte[]> moveListDeck = new List<sbyte[]>();
+            List<sbyte[]> moveListBoard = new List<sbyte[]>();
+            sbyte j;
+            for(sbyte i=0; i<=8; ++i)
+            {
+                if(game[i] == 0)
+                {
+                    j=0;
+                }
+                else if(game[i]>=16)
+                {
+                    j=6;
+                }
+                else if(game[i]>=4)
+                {
+                    j=4;
+                }
+                else
+                {
+                    j=2;
+                }
+                while(j <= 5)
+                {
+                    if(location[j] == 9)
+                    {
+                        sbyte[] move = new sbyte[3];
+                        move[0] = (sbyte)(j>>1);
+                        move[1] = 9;
+                        move[2] = i;
+                        moveListDeck.Add(move);
+                    }
+                    else if(location[j] != -1)
+                    {
+                        sbyte[] move = new sbyte[3];
+                        move[0] = (sbyte)(j>>1);
+                        move[1] = location[j];
+                        move[2] = i;
+                        moveListBoard.Add(move);
+                    }
+                    j+=1;
+                }
+            }
+            return moveListDeck.Concat(moveListBoard).ToList();
+        }
+        private List<sbyte[]> GenerateBetterMove(sbyte[] game)
+        {
+            sbyte[] location = WherePlayablePiece(game);
+            return GenerateOrderMove(game, location);
+        }
     }
 }
