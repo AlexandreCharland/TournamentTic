@@ -33,10 +33,12 @@ namespace TicTacToe
         {
             if(SomethingHasChange(game, prevMove[2]))
             {
+                //This branch leads to a loss.
                 return (prevMove, -1);
             }
             else if(depth == 0)
             {
+                //If you want to evalute a position this is where you should call it.
                 return (prevMove, 0);
             }
             else
@@ -44,6 +46,7 @@ namespace TicTacToe
                 List<sbyte[]> moveList = GenerateBetterMove(game);
                 if(moveList.Count == 0)
                 {
+                    //Out of move, this branch leads to a loss.
                     return (prevMove, -1);
                 }
                 else
@@ -55,15 +58,18 @@ namespace TicTacToe
                         (sbyte[] curMove, sbyte val) = O(MakeMove(game, move),move, (sbyte)(depth-1));
                         if(val>=1)
                         {
+                            //This move leads to a winning position.
                             return (move, (sbyte)(val+1));
                         }
                         else if((val == 0) && (positionValue != 0))
                         {
+                            //A move that doesn't lose just got found.
                             bestMove = move;
                             positionValue = val;
                         }
                         else if((val < positionValue) && (positionValue != 0))
                         {
+                            //This move loses, but slower.
                             bestMove = move;
                             positionValue = val;
                         }
