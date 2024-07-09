@@ -1,3 +1,6 @@
+//This class is in charge of making sure the game between two players goes smoothly
+//Some of the function are usefull for debbuging / testing
+
 namespace TicTacToe
 {
     public class Arbiter : ToolBox
@@ -52,7 +55,7 @@ namespace TicTacToe
                 {
                     code = i;
                 }
-                val = (sbyte) (val >> 1);//In c# the bitwise operation transform a sbyte into an int
+                val = (sbyte) (val >> 1);
             }
             return code;
         }

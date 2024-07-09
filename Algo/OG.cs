@@ -1,4 +1,18 @@
 //This is my original algorithm translated from julia to c#
+//I hope that most engine has a positive score against it.
+
+//Tech
+//It has the minimax algorithm implemented. (To see a more readable version, check the branch in the rep)
+//It is unable to evaluate a position.
+//It only consider the move that aren't pin.
+//It orders the move that bring a piece in the game first.
+//In the minimax algorithm the order of the move matters. Finding a winning
+// continuation early in the search reduces the calculation time.
+
+//Weakness: Is unable to differenciate two move that doesn't lose or doesn't win
+// within a certain distance.
+//It has a hard time navigating the opening phase of the game.
+
 namespace TicTacToe
 {
     public class OG : Engine
@@ -38,6 +52,7 @@ namespace TicTacToe
             else if(depth == 0)
             {
                 return 0;
+                //If you want to evaluate a position this is where you should call it.
             }
             List<sbyte[]> moveList = GenerateBetterMove(game);
             if(moveList.Count == 0)
@@ -66,21 +81,16 @@ namespace TicTacToe
             sbyte j;
             for(sbyte i=0; i<=8; ++i)
             {
-                if(game[i] == 0)
+                switch (game[i])
                 {
-                    j=0;
-                }
-                else if(game[i]>=16)
-                {
-                    j=6;
-                }
-                else if(game[i]>=4)
-                {
-                    j=4;
-                }
-                else
-                {
-                    j=2;
+                    case 0:
+                        j=0;break;
+                    case >=16:
+                        j=6;break;
+                    case >=4:
+                        j=4;break;
+                    default:
+                        j=2;break;
                 }
                 while(j <= 5)
                 {

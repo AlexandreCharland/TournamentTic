@@ -1,5 +1,8 @@
 //This is the classic random algorithm.
 //There is no excuses to lose to him.
+
+//Weakness: Has no clue what is going on.
+
 namespace TicTacToe
 {
     public class RandomMove : Engine
@@ -9,8 +12,12 @@ namespace TicTacToe
         {
             generator = new Random();
         }
+        public RandomMove(Random Generator)
+        {
+            generator = Generator;
+        }
         public override string Name() => "Random";
-        public override RandomMove Duplicate() => new RandomMove();
+        public override RandomMove Duplicate() => new RandomMove(generator);
 
         public override sbyte[] GiveMove(sbyte[] game)
         {

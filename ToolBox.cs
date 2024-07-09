@@ -21,7 +21,8 @@ game[11] 0 if X turn 1 if O turn
 This is the notation of I(image), B(Board or game[i] i∈{0,...,8}) D(Deck of game[i] i∈{9,10})
 */
 
-//This contain every function that are built in
+//This class will contain useful function.
+//I haven't decided yet if all of these function are free or not.
 namespace TicTacToe
 {
     public abstract class ToolBox
@@ -76,7 +77,7 @@ namespace TicTacToe
         }
         //This function takes a game and a move and return the game after the move is played.
         //It assumes that both the game and move are valid.
-        public sbyte[] MakeMove(sbyte[] game, sbyte[] move)
+        public sbyte[] MakeMove(sbyte[] game, sbyte[] move) //cost 0
         {
             sbyte[] newGame = (sbyte[])(game.Clone());
             sbyte piece = (sbyte)(1<<(move[0]<<1));
@@ -191,21 +192,16 @@ namespace TicTacToe
             sbyte j;
             for(sbyte i=0; i<=8; ++i)
             {
-                if(game[i] == 0)
+                switch (game[i])
                 {
-                    j=0;
-                }
-                else if(game[i]>=16)
-                {
-                    j=6;
-                }
-                else if(game[i]>=4)
-                {
-                    j=4;
-                }
-                else
-                {
-                    j=2;
+                    case 0:
+                        j=0;break;
+                    case >=16:
+                        j=6;break;
+                    case >=4:
+                        j=4;break;
+                    default:
+                        j=2;break;
                 }
                 while(j <= 5)
                 {
