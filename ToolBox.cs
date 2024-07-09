@@ -19,6 +19,11 @@ game[11] 0 if X turn 1 if O turn
  O | 32| 16
 
 This is the notation of I(image), B(Board or game[i] i∈{0,...,8}) D(Deck of game[i] i∈{9,10})
+
+A move is annotated in the following way: [P,F,T]
+P the piece size, 0, if it is a small, 1 medium and 2 big
+F where is the piece, from, 0,...,8 if it is from the board and 9 if it is from the deck
+T where to place the piece, 0,...,8
 */
 
 //This class will contain useful function.
