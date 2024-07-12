@@ -10,16 +10,17 @@
 // continuation early in the search reduces the calculation time.
 
 //Weakness: Is unable to differenciate two move that doesn't lose or doesn't win
-// within a certain distance.
+// within a certain depth.
 //It has a hard time navigating the opening phase of the game.
 
 namespace TicTacToe
 {
     public class OG : Engine
     {
-        public OG(){}
+        private sbyte strength;
+        public OG(sbyte Strength){strength = Strength;}
         public override string Name() => "OG";
-        public override OG Duplicate() => new OG();
+        public override OG Duplicate() => new OG(strength);
         
         public override sbyte[] GiveMove(sbyte[] game)
         {
@@ -27,12 +28,17 @@ namespace TicTacToe
             sbyte turn = (game[11]==0) ? (sbyte)1 : (sbyte)-1;
             sbyte eval = turn;
             List<sbyte[]> moveList = GenerateBetterMove(game);
+            sbyte depth = strength;
             foreach(sbyte[] move in moveList)
             {
-                sbyte val = CrunchingNumbers(MakeMove(game, move), move[2], 2);
+                sbyte val = CrunchingNumbers(MakeMove(game, move), move[2], depth);
                 if(val*turn>=1)
                 {
-                    return move;
+                    //This was change. Before it simply return a move that win.
+                    //It would skip a one move win and could get stuck in a loop.
+                    bestMove = move;
+                    eval=0;
+                    depth=1;
                 }
                 else if(((val == 0) || (val*turn < eval*turn)) && (eval != 0))
                 {

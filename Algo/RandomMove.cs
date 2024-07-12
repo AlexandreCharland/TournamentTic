@@ -1,4 +1,4 @@
-//This is the classic random algorithm.
+//This is the classic pick a random move algorithm.
 //There is no excuses to lose to him.
 
 //Weakness: Has no clue what is going on.

@@ -7,20 +7,15 @@ namespace TicTacToe
     {
         public static void Main(string[] args)
         {
-            OG bot1 = new OG();
-            RandomMove bot2 = new RandomMove();
-            List<Engine> gladiators = new List<Engine>();
-            gladiators.Add(bot1);
-            gladiators.Add(bot2);
-            Colosseum(gladiators);
+
         }
         public static void play(Engine bot)
         {
             Arbiter referee = new Arbiter();
-            bool gameInProgress = true;
+            sbyte isItOver;
             sbyte[] userMove;
             sbyte[] compMove;
-            while(gameInProgress)
+            while(true)
             {
                 referee.ShowPosition();
                 //Remove annoying warning messages
@@ -37,10 +32,15 @@ namespace TicTacToe
                     System.Console.WriteLine("Get good");
                     break;
                 }
-                referee.UpdateGame(userMove);
-                if(referee.SomeoneWon())
+                isItOver = referee.UpdateGame(userMove);
+                if(isItOver == 1)
                 {
                     System.Console.WriteLine("Congrats you have won");
+                    break;
+                }
+                else if(isItOver == -1)
+                {
+                    System.Console.WriteLine("Draw");
                     break;
                 }
                 compMove = bot.GiveMove(referee.getGame());
@@ -52,11 +52,16 @@ namespace TicTacToe
                 }
                 //clrscr();
                 System.Console.WriteLine($"The computer played {compMove[0]}{compMove[1]}{compMove[2]}");
-                referee.UpdateGame(compMove);
-                if(referee.SomeoneWon())
+                isItOver = referee.UpdateGame(compMove);
+                if(isItOver == 1)
                 {
                     System.Console.WriteLine("Get good");
-                    gameInProgress = false;
+                    break;
+                }
+                else if(isItOver == -1)
+                {
+                    System.Console.WriteLine("Draw");
+                    break;
                 }
             }
         }
@@ -65,6 +70,7 @@ namespace TicTacToe
             List<sbyte[]> battleField = GenerateBattleField();
             int howMany = gladiators.Count;
             sbyte[,] result = new sbyte[howMany, howMany];
+            sbyte ending;
             for(int i=0; i<howMany; ++i)
             {
                 for(int j=0; j<howMany; ++j)
@@ -72,47 +78,65 @@ namespace TicTacToe
                     if(i==j){continue;}
                     for(int k=0; k<battleField.Count; ++k)
                     {
-                        if(Fight(gladiators[i], gladiators[j], battleField[k]))
+                        ending = Fight(gladiators[i], gladiators[j], battleField[k]);
+                        if(ending == 1)
                         {
                             result[i,j] += 1;
                         }
-                        else
+                        else if(ending == -1)
                         {
                             result[j,i] += 1;
                         }
                     }
                 }
             }
-            System.Console.WriteLine(result[0,1]);
-            System.Console.WriteLine(result[1,0]);
+            for(int i=0; i<howMany;++i)
+            {
+                for(int j=0; j<howMany;++j)
+                {
+                    System.Console.Write($"{result[i,j]} ");
+                }
+                System.Console.WriteLine();
+            }
+            //Todo elo (needs more test bot)
+            //Todo ShowResult
         }
-        public static bool Fight(Engine a, Engine b, sbyte[] game)
+        public static sbyte Fight(Engine a, Engine b, sbyte[] game)
         {
             Arbiter referee = new Arbiter(game);
             Engine playerA = a.Duplicate();
             Engine playerB = b.Duplicate();
             sbyte[] move;
+            sbyte isItOver;
             while(true)
             {
                 move = playerA.GiveMove(referee.getGame());
                 if(!referee.IsPinPiece(move))
                 {
-                    return false;
+                    return -1;
                 }
-                referee.UpdateGame(move);
-                if(referee.SomeoneWon())
+                isItOver = referee.UpdateGame(move);
+                if(isItOver == 1)
                 {
-                    return true;
+                    return 1;
+                }
+                else if(isItOver == -1)
+                {
+                    return 0;
                 }
                 move = playerB.GiveMove(referee.getGame());
                 if(!referee.IsPinPiece(move))
                 {
-                    return true;
+                    return 1;
                 }
-                referee.UpdateGame(move);
-                if(referee.SomeoneWon())
+                isItOver = referee.UpdateGame(move);
+                if(isItOver == 1)
                 {
-                    return false;
+                    return -1;
+                }
+                else if(isItOver == -1)
+                {
+                    return 0;
                 }
             }
         }
@@ -131,7 +155,7 @@ namespace TicTacToe
             }
             return battleField;
         }
-        public static void CalculEloRating(sbyte[] result)
+        public static void CalculEloRating(sbyte[,] result)
         {
             //Todo
         }

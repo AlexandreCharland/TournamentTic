@@ -6,27 +6,42 @@ namespace TicTacToe
     public class Arbiter : ToolBox
     {
         private sbyte[] game;
+        private List<long> positionList;
         public Arbiter()
         {
             game = new sbyte[12];
             game[9] = 42;
             game[10] = 42;
+            positionList = new List<long>();
         }
         public Arbiter(sbyte[] Game)
         {
             game = Game;
+            positionList = new List<long>();
+            long val = TransformPositionNumber();
+            positionList.Add(val);
         }
         public sbyte[] getGame()
         {
             return (sbyte[])(game.Clone());
         }
-        public void UpdateGame(sbyte[] move)
+        public sbyte UpdateGame(sbyte[] move)
         {
             game = MakeMove(game, move);
-        }
-        public bool SomeoneWon()
-        {
-            return SomeoneWon(game);
+            if(SomeoneWon(game))
+            {
+                return 1;
+            }
+            long val = TransformPositionNumber();
+            foreach(long position in positionList)
+            {
+                if(val == position)
+                {
+                    return -1;
+                }
+            }
+            positionList.Add(val);
+            return 0;
         }
         private bool MoveInList(List<sbyte[]> listMove, sbyte[] theMove)
         {
@@ -97,6 +112,19 @@ namespace TicTacToe
                 newVec[i] = (sbyte)Char.GetNumericValue(s[i]);
             }
             return newVec;
+        }
+        private long TransformPositionNumber()
+        {
+            long val = 0;
+            for(int i=0; i<=8; ++i)
+            {
+                val+=(game[i])<<(i*6);
+            }
+            if(game[11] == 1)
+            {
+                val *= -1;
+            }
+            return val;
         }
     }
 }
