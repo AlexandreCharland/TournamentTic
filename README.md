@@ -19,5 +19,6 @@ The piece can be placed on a square if it is bigger than what is already on it. 
 A player can't move a piece that is under another one.
 If a player moves a piece and reveals a tictactoe for the opponent, he automatically loses. Even if he intended to place his piece back to block it.
 This rule makes it very important to keep track of what is under what.
-If a player is out of moves, it loses.
+If a player is out of moves, it loses.\
+If a position repeat once, the game is declare a draw.\
 The added rules make the game a lot more difficult and interesting.
