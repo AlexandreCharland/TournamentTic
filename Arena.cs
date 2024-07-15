@@ -146,7 +146,6 @@ namespace TicTacToe
             sbyte[] game = new sbyte[12];
             game[9] = 42;
             game[10] = 42;
-            battleField.Add((sbyte[])(game.Clone()));
             Arbiter helper = new Arbiter();
             List<sbyte[]> moveList = helper.GenerateEveryMove(game);
             foreach (sbyte[] move in moveList)

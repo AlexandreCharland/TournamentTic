@@ -17,10 +17,13 @@ namespace TicTacToe
 {
     public class OG : Engine
     {
-        private sbyte strength;
-        public OG(sbyte Strength){strength = Strength;}
+        //I chose a depth of 3 (Well actually 4 if you look at the code)
+        //This depth makes it strong enough that I struggle to beat it and
+        //it doesn't take that long to give a move.
+        private sbyte strength = 3;
+        public OG(){}
         public override string Name() => "OG";
-        public override OG Duplicate() => new OG(strength);
+        public override OG Duplicate() => new OG();
         
         public override sbyte[] GiveMove(sbyte[] game)
         {
@@ -38,7 +41,7 @@ namespace TicTacToe
                     //It would skip a one move win and could get stuck in a loop.
                     bestMove = move;
                     eval=0;
-                    depth=1;
+                    depth=0;
                 }
                 else if(((val == 0) || (val*turn < eval*turn)) && (eval != 0))
                 {
