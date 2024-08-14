@@ -18,7 +18,7 @@ namespace TicTacToe
         {
             game = Game;
             positionList = new List<long>();
-            long val = TransformPositionNumber();
+            long val = TransformPositionNumber(game);
             positionList.Add(val);
         }
         public sbyte[] getGame()
@@ -32,7 +32,7 @@ namespace TicTacToe
             {
                 return 1;
             }
-            long val = TransformPositionNumber();
+            long val = TransformPositionNumber(game);
             foreach(long position in positionList)
             {
                 if(val == position)
@@ -112,19 +112,6 @@ namespace TicTacToe
                 newVec[i] = (sbyte)Char.GetNumericValue(s[i]);
             }
             return newVec;
-        }
-        private long TransformPositionNumber()
-        {
-            long val = 0;
-            for(int i=0; i<=8; ++i)
-            {
-                val+=(game[i])<<(i*6);
-            }
-            if(game[11] == 1)
-            {
-                val *= -1;
-            }
-            return val;
         }
     }
 }

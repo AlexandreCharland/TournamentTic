@@ -1,13 +1,12 @@
 ﻿//This is the "main"
 //This is where the battles will take place.
-
+using System.Diagnostics;//for the usage of the stopwatch
 namespace TicTacToe
 {
     public class Arena
     {
         public static void Main(string[] args)
         {
-
         }
         public static void play(Engine bot)
         {
@@ -15,6 +14,7 @@ namespace TicTacToe
             sbyte isItOver;
             sbyte[] userMove;
             sbyte[] compMove;
+            //Stopwatch sw = new Stopwatch();
             while(true)
             {
                 referee.ShowPosition();
@@ -43,7 +43,10 @@ namespace TicTacToe
                     System.Console.WriteLine("Draw");
                     break;
                 }
+                //sw.Start();
                 compMove = bot.GiveMove(referee.getGame());
+                //sw.Stop();
+                //System.Console.WriteLine("Elapsed={0}",sw.Elapsed);
                 if(!referee.IsPinPiece(compMove))
                 {
                     System.Console.WriteLine("The computer played an impossible move");
@@ -69,37 +72,19 @@ namespace TicTacToe
         {
             List<sbyte[]> battleField = GenerateBattleField();
             int howMany = gladiators.Count;
-            sbyte[,] result = new sbyte[howMany, howMany];
-            sbyte ending;
+            sbyte[,,] result = new sbyte[howMany, howMany, 27];
             for(int i=0; i<howMany; ++i)
             {
                 for(int j=0; j<howMany; ++j)
                 {
                     if(i==j){continue;}
-                    for(int k=0; k<battleField.Count; ++k)
+                    for(int k=0; k<27; ++k)
                     {
-                        ending = Fight(gladiators[i], gladiators[j], battleField[k]);
-                        if(ending == 1)
-                        {
-                            result[i,j] += 1;
-                        }
-                        else if(ending == -1)
-                        {
-                            result[j,i] += 1;
-                        }
+                        result[i,j,k] = Fight(gladiators[i], gladiators[j], battleField[k]);
                     }
                 }
             }
-            for(int i=0; i<howMany;++i)
-            {
-                for(int j=0; j<howMany;++j)
-                {
-                    System.Console.Write($"{result[i,j]} ");
-                }
-                System.Console.WriteLine();
-            }
-            //Todo elo (needs more test bot)
-            //Todo ShowResult
+            CalculEloRating(result, howMany);
         }
         public static sbyte Fight(Engine a, Engine b, sbyte[] game)
         {
@@ -154,9 +139,64 @@ namespace TicTacToe
             }
             return battleField;
         }
-        public static void CalculEloRating(sbyte[,] result)
+        public static void CalculEloRating(sbyte[,,] result, int numberBot)
         {
-            //Todo
+            int k = 10;//La constante va changer
+            Random gen = new Random();
+            int change = 10;
+            double[] ratings = new double[numberBot];
+            List<sbyte[]> order = new List<sbyte[]>();
+            for(sbyte i=0; i<numberBot; ++i)
+            {
+                for(sbyte j=0; j<numberBot; ++j)
+                {
+                    if(i==j){continue;}
+                    for(sbyte l=0; l<27; ++l)
+                    {
+                        order.Add(new sbyte[]{i,j,l});
+                    }
+                }
+            }
+            int amount = order.Count;int ind;
+            sbyte a; sbyte b;sbyte res; double prob;
+            while(amount>0)
+            {
+                ind = gen.Next(0,amount);
+                sbyte[] triple = order[ind];
+                order.RemoveAt(ind);
+                a = triple[0];
+                b = triple[1];
+                res = result[triple[0], triple[1], triple[2]];
+                if(res == 1)//A won
+                {
+                    prob = Prob(ratings[a], ratings[b]);
+                    ratings[a] += k*prob;
+                    ratings[b] -= k*prob;
+                }
+                else if(res == -1)//B won
+                {
+                    prob = Prob(ratings[b], ratings[a]);
+                    ratings[a] -= k*prob;
+                    ratings[b] += k*prob;
+                }
+                else
+                {
+                    prob = Prob(ratings[a], ratings[b]);
+                    ratings[a] += k*(0.5-prob);
+                    prob = Prob(ratings[b], ratings[a]);
+                    ratings[b] += k*(0.5-prob);
+                }
+                --amount;
+            }
+            for(int i=0; i<numberBot; ++i)
+            {
+                System.Console.WriteLine(ratings[i]);
+            }
+        }
+        public static double Prob(double ratingA, double ratingB)
+        {
+            int s = 100;//La constante va changer
+            return 1/(1+Math.Pow(10,(ratingB-ratingA)/s));
         }
     }
 }
