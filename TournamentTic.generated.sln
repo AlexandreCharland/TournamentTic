@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tournament", "tournament.csproj", "{F63DDC2B-F521-4E90-8BD8-6763DDF606BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tournament", "tournament.csproj", "{01F69372-48F9-40AE-82AB-EF5E5F8969DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F63DDC2B-F521-4E90-8BD8-6763DDF606BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F63DDC2B-F521-4E90-8BD8-6763DDF606BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F63DDC2B-F521-4E90-8BD8-6763DDF606BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F63DDC2B-F521-4E90-8BD8-6763DDF606BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01F69372-48F9-40AE-82AB-EF5E5F8969DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01F69372-48F9-40AE-82AB-EF5E5F8969DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01F69372-48F9-40AE-82AB-EF5E5F8969DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01F69372-48F9-40AE-82AB-EF5E5F8969DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
