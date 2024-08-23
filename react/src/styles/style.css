@@ -1,0 +1,101 @@
+/* Product Container Styling */
+.product {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 16px;
+  background-color: #fff;
+}
+
+/* Info Button Styling */
+.infoButton {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #e67e22;
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Product Image Styling */
+.productimage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Container for Name and Price */
+.productNameAndPrice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+/* Product Name Styling */
+.productName {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+/* Product Price Styling */
+.productprice {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  margin: 0;
+  font-size: 1.125rem;
+  color: #e67e22;
+}
+
+/* Product Category Styling */
+.productcategory {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+  margin: 16px 0;
+  font-size: 1rem;
+  text-align: center;
+  color: #555;
+}
+
+/* Product Stock Styling */
+.productstock {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+  padding: 0 16px 16px;
+  font-size: 0.875rem;
+  text-align: center;
+  color: #888;
+}
+
+/* Message Styling */
+.message {
+  position: absolute;
+  top: 40px;
+  left: 8px;
+  background-color: #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.button-grid {
+  font-size: "50px";
+  width: "100px";
+  height: "100px";
+  border: "1px solid black";
+}

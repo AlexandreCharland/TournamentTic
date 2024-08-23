@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Superposition de boutons</title>
+    <style>
+      .container {
+        position: relative;
+        width: 200px;
+        height: 200px;
+      }
+
+      .button1 {
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        z-index: 1; /* Met ce bouton au-dessus du second */
+        background-color: red;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .button2 {
+        position: absolute;
+        top: 70px; /* Décalé pour être partiellement superposé */
+        left: 70px;
+        z-index: 2; /* Met ce bouton au-dessus du premier */
+        background-color: blue;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button class="button1">Bouton 1</button>
+      <button class="button2">Bouton 2</button>
+    </div>
+  </body>
+</html>
