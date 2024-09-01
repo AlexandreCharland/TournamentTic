@@ -7,6 +7,10 @@ namespace TicTacToe
     {
         public static void Main(string[] args)
         {
+            List<Engine> a = new List<Engine>();
+            a.Add(new OG());
+            a.Add(new Restrictor());
+            Colosseum(a);
         }
         public static void play(Engine bot)
         {
@@ -14,7 +18,6 @@ namespace TicTacToe
             sbyte isItOver;
             sbyte[] userMove;
             sbyte[] compMove;
-            //Stopwatch sw = new Stopwatch();
             while(true)
             {
                 referee.ShowPosition();
@@ -43,10 +46,7 @@ namespace TicTacToe
                     System.Console.WriteLine("Draw");
                     break;
                 }
-                //sw.Start();
                 compMove = bot.GiveMove(referee.getGame());
-                //sw.Stop();
-                //System.Console.WriteLine("Elapsed={0}",sw.Elapsed);
                 if(!referee.IsPinPiece(compMove))
                 {
                     System.Console.WriteLine("The computer played an impossible move");
@@ -84,7 +84,7 @@ namespace TicTacToe
                     }
                 }
             }
-            CalculEloRating(result, howMany);
+            CalculEloRating(result, howMany, gladiators);
         }
         public static sbyte Fight(Engine a, Engine b, sbyte[] game)
         {
@@ -139,11 +139,10 @@ namespace TicTacToe
             }
             return battleField;
         }
-        public static void CalculEloRating(sbyte[,,] result, int numberBot)
+        public static void CalculEloRating(sbyte[,,] result, int numberBot, List<Engine> gladiators)
         {
             int k = 10;//La constante va changer
             Random gen = new Random();
-            int change = 10;
             double[] ratings = new double[numberBot];
             List<sbyte[]> order = new List<sbyte[]>();
             for(sbyte i=0; i<numberBot; ++i)
@@ -190,12 +189,12 @@ namespace TicTacToe
             }
             for(int i=0; i<numberBot; ++i)
             {
-                System.Console.WriteLine(ratings[i]);
+                System.Console.WriteLine($"{gladiators[i].Name()} {Math.Round(ratings[i])}");
             }
         }
         public static double Prob(double ratingA, double ratingB)
         {
-            int s = 100;//La constante va changer
+            int s = 400;//La constante va changer
             return 1/(1+Math.Pow(10,(ratingB-ratingA)/s));
         }
     }
