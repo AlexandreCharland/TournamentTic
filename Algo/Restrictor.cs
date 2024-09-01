@@ -16,13 +16,9 @@ namespace TicTacToe
             List<sbyte[]> moveList = GenerateBetterMove(game);
             sbyte depth = 6;
             sbyte val;
-            //List<sbyte[]> moveList = new List<sbyte[]>();
-            //moveList.Add(new sbyte[3]{2,9,6});
             foreach(sbyte[] move in moveList)
             {
-                //val = CrunchingNumbers(MakeMove(game, move), move[2], depth);
                 val = Mx(MakeMove(game, move), move[2], depth, -1, eval);
-                //System.Console.WriteLine($"{move[0]}{move[1]}{move[2]} {val} {depth}");
                 if(val < eval)
                 {
                     bestMove = move;
@@ -33,7 +29,6 @@ namespace TicTacToe
                     }
                 }
             }
-            //System.Console.WriteLine($"{bestMove[0]}{bestMove[1]}{bestMove[2]} {eval}");
             return bestMove;
         }
         private sbyte Mn(sbyte[] game, sbyte square, sbyte depth, sbyte alpha, sbyte beta)
@@ -105,40 +100,6 @@ namespace TicTacToe
                 }
             }
             return positionValue;
-        }
-        private sbyte CrunchingNumbers(sbyte[] game, sbyte square, sbyte depth)
-        {
-            sbyte positionValue = (sbyte)((depth&1)*(47));
-            sbyte backup = (sbyte)((47)-positionValue);
-            sbyte turn = ((depth&1)!=0) ? (sbyte)1 : (sbyte)-1;
-            if(SomethingHasChange(game, square))
-            {
-                return positionValue;
-            }
-            else if(depth == 0)
-            {
-                return CountingMoves(game);
-            }
-            List<sbyte[]> moveList = GenerateBetterMove(game);
-            if(moveList.Count == 0)
-            {
-                return positionValue;
-            }
-            sbyte val;
-            --depth;
-            foreach(sbyte[] move in moveList)
-            {
-                val = CrunchingNumbers(MakeMove(game, move), move[2], depth);
-                if(val*turn<positionValue*turn)
-                {
-                    positionValue = val;
-                    if(Math.Abs(val-backup) < 4)
-                    {
-                        break;
-                    }
-                }
-            }
-            return (sbyte)(positionValue+1);
         }
         public sbyte CountingMoves(sbyte[] game)
         {
