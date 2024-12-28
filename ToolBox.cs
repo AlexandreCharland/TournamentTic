@@ -232,14 +232,15 @@ namespace TicTacToe
         //This function take a game and return an unique number
         public long TransformPositionNumber(sbyte[] game)
         {
-            #pragma warning disable 0675
             long val = 0;
             for(int i=0; i<=8; ++i)
             {
-                val = val | (game[i])<<(i*6);
+                val+=(game[i])<<(i*6);
             }
-            val |= game[11] << 53;
-            #pragma warning restore 0675
+            if(game[11] == 1)
+            {
+                val *= -1;
+            }
             return val;
         }
     }

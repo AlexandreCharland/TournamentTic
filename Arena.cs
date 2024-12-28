@@ -7,10 +7,16 @@ namespace TicTacToe
     {
         public static void Main(string[] args)
         {
-            List<Engine> a = new List<Engine>();
-            a.Add(new OG());
-            a.Add(new Restrictor());
-            Colosseum(a);
+            //Code to do the tournament
+            //List<Engine> a = new List<Engine>();
+            //a.Add(new ...);
+            //...
+            //Colosseum(a);
+
+            //Code to play against a bot
+            //play(new ...);
+
+            //You can also use this function to debug your engine.
         }
         public static void play(Engine bot)
         {
@@ -78,6 +84,7 @@ namespace TicTacToe
                 for(int j=0; j<howMany; ++j)
                 {
                     if(i==j){continue;}
+                    System.Console.WriteLine($"{i} {j}");
                     for(int k=0; k<27; ++k)
                     {
                         result[i,j,k] = Fight(gladiators[i], gladiators[j], battleField[k]);
